@@ -60,6 +60,37 @@
                     <span class="badge bg-light text-primary ms-2 fs-6 border">{{ post.comments.count }}</span>
                 </h3>
 
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                   {% for field in form %}
+                        <div class="mb-3">
+                            </label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                                 {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                </div class="form-text text-muted">{{ field.help_text }}</div>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                <div class="inalid-feedback d-block">
+                                   {{ error }}
+                                </div>
+                            {% enfor %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end-mt-4">
+                    <button type="reset" class="btn btn-light border px-4">Cancelar</button>
+                    <button type="submit" class="btn btn-primary px-5 shadow">
+                       Publicar Comentario
+                    </button>
+                   </div>
+                </form>
+
                 {% for comment in post.comments.all %}
                 <div class="d-flex mb-4 p-3 rounded-3 hover-bg-light transition-all">
                     <div class="flex-shrink-0">
